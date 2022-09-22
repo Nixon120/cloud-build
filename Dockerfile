@@ -12,5 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM alpine
-CMD ["echo", "Hello World!"]
+#FROM alpine
+#CMD ["echo", "Hello World!"]
+FROM node:latest as node
+WORKDIR /app
+COPY . .
+RUN npm install
+RUN npm run build --prod
+
+ENV PORT=8080
+
+FROM nginx:alpine
+COPY --from=node /app/dist/streamin-app/ /usr/share/nginx/html/
+COPY nginx.conf /etc/nginx/
+EXPOSE 8080
+CMD ["nginx", "-g", "daemon off;"]
