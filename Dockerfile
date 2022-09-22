@@ -12,11 +12,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM node:14-alpine
-WORKDIR /app
-COPY . .
-RUN npm install
-RUN npm rebuild node-sass
-RUN npm run build
-EXPOSE 3000
-CMD ["npm","start"]
+FROM alpine
+CMD ["echo", "Hello World!"]
